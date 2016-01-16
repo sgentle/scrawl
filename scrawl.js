@@ -548,4 +548,6 @@
 
   activate(rtriangle);
 
+  activate(rtriangle);
+
 }).call(this);

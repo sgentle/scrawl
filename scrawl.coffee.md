@@ -353,5 +353,6 @@ Now add all of these to the palette
     addPalette double, ','
 
     activate rtriangle
+    activate rtriangle # Second time so we reverse it
 
 
