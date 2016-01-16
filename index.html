@@ -1,0 +1,70 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <title>Scrawl</title>
+  <style>
+  body {
+    margin: 0; overflow: hidden;
+  }
+  #palette {
+    position: absolute;
+    top: 0; right: 0; width: 100px; bottom: 2em;
+    border-left: 2px inset;
+    overflow-y: scroll;
+    background: white;
+  }
+  #palette .key {
+    float: left;
+    width: 1em;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  #drawbox :hover {
+    cursor: pointer;
+  }
+  #drawbox {
+    pointer-events: all;
+  }
+
+  .palettebutton.active {
+    border: 2px inset;
+  }
+  .palettebutton.reversed svg {
+    transform: scale(-1, -1);
+  }
+  .palettebutton.flipped svg {
+    transform: scaleY(-1);
+  }
+  .palettebutton.flipped.reversed svg {
+    transform: scaleX(-1);
+  }
+  .palettebutton {
+    border: 2px outset;
+    margin: 4px 2px;
+    padding: 4px;
+  }
+  #download {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    /*border-left: 2px inset;*/
+  }
+  </style>
+</head>
+<body>
+  <svg id="drawbox" xmlns="http://www.w3.org/2000/svg" version="1.1"
+    viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"
+    stroke="black" stroke-width="4" stroke-linecap="round">
+    <g class="hover" stroke-opacity="0.3">
+    </g>
+    <g class="clickables" stroke-width="16" stroke-opacity="0">
+      <line x1="700" y1="450" x2="900" y2="450"></line>
+    </g>
+    <line x1="700" y1="450" x2="900" y2="450"></line>
+  </svg>
+  <div id="palette">
+  </div>
+  <button id="download">Download image</button>
+  <script src="scrawl.js"></script>
+</body>
