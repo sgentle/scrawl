@@ -102,7 +102,9 @@ function that we call on a scrawl when we click it.
 
     curTool = ->
 
-    $('#drawbox').addEventListener 'click', (ev) ->
+    drawbox = $('#drawbox')
+
+    drawbox.addEventListener 'click', (ev) ->
       el = ev.target
       return unless el.tagName is 'line'
       if ev.shiftKey
@@ -116,16 +118,16 @@ We're taking advantage here of the fact that scrawl doesn't actually check if
 the thing it's attached to is an svg root. So we just tell it to draw where we
 want.
 
-    hoverbox = $('#drawbox').querySelector('.hover')
+    hoverbox = drawbox.querySelector('.hover')
     currentHover = null
-    $('#drawbox').addEventListener 'mouseover', (ev) ->
+    drawbox.addEventListener 'mouseover', (ev) ->
       return unless ev.target.tagName is 'line'
       currentHover = ev.target
       s = scrawl ev.target
       s.svg = hoverbox
       curTool s
 
-    $('#drawbox').addEventListener 'mouseout', (ev) ->
+    drawbox.addEventListener 'mouseout', (ev) ->
       return unless ev.target.tagName is 'line'
       currentHover = null
       hoverbox.innerHTML = ""
@@ -139,6 +141,34 @@ We want to refresh the preview when the tool state is changed
       s.svg = hoverbox
       curTool s
 
+Zooming
+-------
+
+    screenToSVG = (svg, point) ->
+      pt = svg.createSVGPoint()
+      ctm = svg.getScreenCTM().inverse()
+      pt.x = point.x
+      pt.y = point.y
+      newpt = pt.matrixTransform(ctm)
+      {x: newpt.x, y: newpt.y}
+
+    currentView = {}
+    currentView[k] = v for k, v of drawbox.viewBox.baseVal
+
+    drawbox.addEventListener 'wheel', (ev) ->
+      scale = 1 + ev.deltaY/1000
+
+      origin = screenToSVG drawbox, {x: ev.pageX, y: ev.pageY}
+
+      currentView = cv =
+        x: (currentView.x - origin.x) * scale + origin.x
+        y: (currentView.y - origin.y) * scale + origin.y
+        width: currentView.width * scale
+        height: currentView.height * scale
+
+      drawbox.setAttribute 'viewBox', "#{cv.x} #{cv.y} #{cv.width} #{cv.height}"
+      ev.preventDefault()
+
 
 Downloading
 -----------
@@ -148,7 +178,7 @@ element to the document and pretend to click it. We also strip out any extra
 groups we're using.
 
     $('#download').addEventListener 'click', ->
-      d = $('#drawbox').cloneNode(true)
+      d = drawbox.cloneNode(true)
       d.querySelector('.clickables').remove()
       d.querySelector('.hover').remove()
       f = new File([d.outerHTML], "scrawl.svg", {type:"image/svg+xml"});

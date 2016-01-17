@@ -36,7 +36,7 @@ Future work and ideas
 ---------------------
 
 * Better mobile support (it kind of works but only really in landscape mode and the UX isn't too great)
-* Panning/zooming the svg canvas
+* Panning the svg canvas
 * Resize the svg canvas based on browser size
 * Custom tools
 * Undo support (tricky because we don't really keep track of the lines, just dump them into the DOM)
