@@ -1,7 +1,7 @@
 Scrawl
 ======
 
-Scrawl is a tool for interactive iterative geometric art, aka notebook doodles. It's intended to reproduce the playful, casual fun of drawing in the margins on top of today's soulless computation machines. You can view a [demo here](https://demos.samgentle.com/scrawl/)
+Scrawl is a tool for interactive iterative geometric art, aka notebook doodles. It's intended to reproduce the playful, casual fun of drawing in the margins on top of today's soulless computation machines. You can view a [demo here](https://demos.samgentle.com/scrawl/).
 
 The basic unit in Scrawl is a line. You start with a single line and a palette of tools, each of which generates more lines. Each line has a direction, length and angle that subsequent lines are created in relation to. That means that four uses of a right angle tool becomes a square, a half-size triangle tool used on a half-size triangle will add a quarter-size triangle, and so on.
 
@@ -22,7 +22,7 @@ And here is a tee:
 tee = (line) -> line.rotate(90).penUp().backward(0.5).penDown().forward(2)
 ```
 
-The position is relative to the end of the previous line, rotations are relative to the rotation of the line they rotate from, and movement is similarly scaled (the `.backward(0.5)` is later compensated by a `.forward(2)) to draw a full-size line).
+The position is relative to the end of the previous line, rotations are relative to the rotation of the line they rotate from, and movement is similarly scaled (the `.backward(0.5)` is later compensated by a `.forward(2)`) to draw a full-size line).
 
 Every command returns a new scrawl instance, so you can draw multiple things from one starting point without worrying about clobbering state. For example, arrow:
 
