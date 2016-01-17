@@ -113,7 +113,8 @@ function that we call on a scrawl when we click it.
 When you mouseover a line it shows a preview of what the tool would look like
 if clicked. This is in another temporary svg group that we nuke regularly.
 We're taking advantage here of the fact that scrawl doesn't actually check if
-the thing it's attached to is an svg root. So we just tell it to draw where we want.
+the thing it's attached to is an svg root. So we just tell it to draw where we
+want.
 
     hoverbox = $('#drawbox').querySelector('.hover')
     currentHover = null
@@ -143,7 +144,8 @@ Downloading
 -----------
 
 To convince the browser to let us download, we need to attach a pretend link
-element to the document and pretend to click it. We also strip out any extra groups we're using.
+element to the document and pretend to click it. We also strip out any extra
+groups we're using.
 
     $('#download').addEventListener 'click', ->
       d = $('#drawbox').cloneNode(true)
@@ -209,7 +211,7 @@ don't have to make separate tools for every direction.
     divs = new Map()
 
 This is pretty clever. We use scrawl itself to preview tools rather than using
-static imagaes. That means no boding image management.
+static imagaes. That means no boring image management.
 
     addPalette = (func, key) ->
       keymap[key] = func if key
