@@ -344,7 +344,7 @@
 
   window.addEventListener('keypress', function(ev) {
     var char, func;
-    char = String.fromCharCode(event.which || event.keyCode);
+    char = String.fromCharCode(ev.which || ev.keyCode);
     if (func = keymap[char.toLowerCase()]) {
       return activate(func, ev.shiftKey);
     }

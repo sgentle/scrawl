@@ -234,7 +234,7 @@ don't have to make separate tools for every direction.
 
     keymap = {}
     window.addEventListener 'keypress', (ev) ->
-      char = String.fromCharCode(event.which || event.keyCode)
+      char = String.fromCharCode(ev.which || ev.keyCode)
       if func = keymap[char.toLowerCase()]
         activate func, ev.shiftKey
 
