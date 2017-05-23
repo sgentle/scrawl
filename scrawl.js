@@ -260,13 +260,25 @@
     currentView[k] = v;
   }
 
+  clickableGroup = drawbox.querySelector('.clickables');
+
+  clickableWidth = 16;
+
   drawbox.addEventListener('wheel', function(ev) {
-    var cv, origin, scale;
+    var cv, origin, scale, scalePoint;
     scale = 1 + ev.deltaY / 1000;
-    origin = screenToSVG(drawbox, {
-      x: ev.pageX,
-      y: ev.pageY
-    });
+    if (scale < 1) {
+      scalePoint = {
+        x: ev.pageX,
+        y: ev.pageY
+      };
+    } else {
+      scalePoint = {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2
+      };
+    }
+    origin = screenToSVG(drawbox, scalePoint);
     currentView = cv = {
       x: (currentView.x - origin.x) * scale + origin.x,
       y: (currentView.y - origin.y) * scale + origin.y,
