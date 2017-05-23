@@ -60,9 +60,11 @@ stroke is small, so we duplicate all lines in a second, larger group.
         el = document.createElementNS("http://www.w3.org/2000/svg", "line");
         el.setAttribute k, v for k, v of {x1: @start.x, y1: @start.y, x2: @end.x, y2: @end.y}
         @svg.appendChild el
+        undoStack.addElement el
         if clickables = @svg.querySelector('.clickables')
           invisEl = el.cloneNode()
           clickables.appendChild invisEl
+          undoStack.addElement invisEl
 
         this
 
@@ -110,6 +112,7 @@ function that we call on a scrawl when we click it.
       if ev.shiftKey
         el.remove()
       else
+        undoStack.next()
         curTool scrawl el
 
 When you mouseover a line it shows a preview of what the tool would look like
@@ -167,7 +170,34 @@ Zooming
         height: currentView.height * scale
 
       drawbox.setAttribute 'viewBox', "#{cv.x} #{cv.y} #{cv.width} #{cv.height}"
+      clickableWidth *= scale
+      clickableGroup.setAttribute 'stroke-width', clickableWidth
       ev.preventDefault()
+
+Undo
+----
+
+We implement undo with a simple stack model. Because the underlying code
+doesn't know about shapes, just lines, we just store all the lines for the
+current undo step in a big array and advance the undo stack on each click.
+
+The initial line is drawn before the stack is advanced for the first time, so
+it can't be undone.
+
+    undoButton = $('#undo')
+
+    undoStack = do ->
+      stack = []
+      addElement: (el) -> stack[0]?.push el
+      next: ->
+        stack.unshift []
+        undoButton.disabled = false
+      undo: ->
+        el.remove() for el in stack.shift() if stack.length > 0
+        undoButton.disabled = true if stack.length is 0
+
+    undoButton.addEventListener 'click', -> undoStack.undo()
+    document.addEventListener 'keydown', (ev) -> undoStack.undo() if ev.keyCode is 90 and (ev.ctrlKey or ev.metaKey)
 
 
 Downloading

@@ -8,7 +8,7 @@
   }
   #palette {
     position: absolute;
-    top: 0; right: 0; width: 100px; bottom: 48px;
+    top: 0; right: 0; width: 100px; bottom: 72px;
     border-left: 2px inset;
     overflow-y: scroll;
     background: white;
@@ -43,6 +43,10 @@
     margin: 4px 2px;
     padding: 4px;
   }
+  #undo {
+    position: absolute;
+    bottom: 48px; right: 0; width: 100px; height: 24px;
+  }
   #download {
     position: absolute;
     bottom: 24px; right: 0; width: 100px; height: 24px;
@@ -71,6 +75,7 @@
   </svg>
   <div id="palette">
   </div>
+  <button id="undo" disabled>Undo</button>
   <button id="download">Download svg</button>
   <button id="info" onclick="this.firstChild.click()"><a href="http://github.com/sgentle/scrawl">Info + source</a></button>
   <script src="scrawl.js"></script>
